@@ -2,33 +2,32 @@
 import { Tag, TagInput } from 'emblor';
 import React from 'react';
 
-
-
-
-
+//@ts-ignore
 export const SearchInputWithTags = ({ field,setValue }) =>{
+
+  const handleClearAllTags = () => {
+    setTags([]);
+    setValue('topics', []);
+  };
 
     const [tags, setTags] = React.useState<Tag[]>([]);
     const [activeTagIndex, setActiveTagIndex] = React.useState<number | null>(null);
 
-    const handleDeleteTag = (tagId) => {
+    const handleDeleteTag = (tagId:string) => {
         const newTags = tags.filter((tag) => tag.id !== tagId);
         setTags(newTags);
       };
-      
-      const handleOpenDiv = (tagId) => {
+
+
+      const handleOpenDiv = (tagId:string) => {
         console.log(`Abrindo div para tag com id ${tagId}`);
 
       };
-
     return (
-
-
+      <div className='bg-gray-200 '>
      <TagInput
-     
-     
       {...field}
-      placeholder="Enter a topic"
+      placeholder="Digite uma item para pesquisar"
       tags={tags}
       styleClasses={{
     input: 'border border-gray-300 p-2',
@@ -63,13 +62,21 @@ export const SearchInputWithTags = ({ field,setValue }) =>{
       setActiveTagIndex={setActiveTagIndex}
       customTagRenderer = {
         (tag, isActiveTag) => (
-          <div key={tag.id} className={`px-2 py-1 bg-red-500 rounded-full ${isActiveTag ? "ring-ring ring-offset-2 ring-2 ring-offset-background" : ""}`}>
-            <span className="ml-1 text-black text-sm" onClick={() => handleDeleteTag(tag.id)}>x</span> 
+          <div key={tag.id} className={`px-2 py-1 bg-red-500 rounded-full ${isActiveTag ? "ring-ring ring-offset-2 ring-2 ring-offset-background": ""}`}>
+            <span style={{cursor:'pointer', width:'40px'}} className="ml-1 text-black text-sm" onClick={() => handleDeleteTag(tag.id)}>x</span>
             <span className="text-white text-sm mr-1">{tag.text}</span>
-            <span className="ml-1 text-black text-sm" onClick={() => handleOpenDiv(tag.id)}>+</span>
+            <span style={{cursor:'pointer',width:'40px'}} className="ml-1 text-black text-sm" onClick={() => handleOpenDiv(tag.id)}>+</span>
           </div>
         )
       }
     />
+    <button
+    type="button"
+    onClick={handleClearAllTags}
+    className="text-red-500 hover:text-red-600 ml-2"
+  >
+    Limpar
+  </button>
+  </div>
 )
 }

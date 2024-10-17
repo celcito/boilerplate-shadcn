@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 
 import {SearchInputWithTags} from './components/SearchInputWithTags'
 
+
 function App() {
 
   const formik = useFormik({
@@ -35,9 +36,6 @@ function App() {
   });
   return (
     <>
-
-
-    
     <form>
       <SearchInputWithTags field={formik} setValue={formik.setFieldValue} />
     </form>
